@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Binary = () => {
     const [search, setSearch] = useState('');
@@ -48,14 +48,18 @@ const Binary = () => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    useEffect(() => {
+        generateRandomArray();
+    }, []);
+
     return (
         <div>
             <h3 className="text-dark text-center mb-3">Binary Search</h3>
             <div className="row mb-3">
-                <div className="col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
+                {/* <div className="col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
                     <button type="button" className="btn btn-outline-primary" onClick={generateRandomArray} disabled={search !== ''}>Generate Random Array</button>
-                </div>
-                <div className="col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
+                </div> */}
+                <div className="col-12 d-flex justify-content-center align-items-center">
                     <input type="number" className="form-control border me-2" placeholder="Enter number to search" value={search} onChange={e => setSearch(e.target.value)} disabled={numbers.length === 0}/>
                     <button type="button" className="btn btn-outline-primary" onClick={startSearching} disabled={numbers.length === 0}>Search</button>
                 </div>

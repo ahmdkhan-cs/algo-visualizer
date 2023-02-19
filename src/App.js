@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import Sequential from "./pages/Searching/Sequential";
 import Binary from "./pages/Searching/Binary";
 import Bubble from "./pages/Sorting/Bubble";
-import 'bootstrap';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 

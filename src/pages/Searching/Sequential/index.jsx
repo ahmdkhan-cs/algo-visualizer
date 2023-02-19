@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Toast from "../../../components/Toast";
 
 
 const Sequential = () => {
@@ -48,13 +49,13 @@ const Sequential = () => {
     return (
         <div>
             <h3 className="text-dark text-center mb-3">Sequential Search</h3>
-            <div className="row mb-3">
-                <div className="col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
+            <div className="d-flex justify-content-around align-items-center mb-3">
+                <div className="mx-3">
                     <button type="button" className="btn btn-outline-primary" onClick={generateRandomArray} disabled={search !== ''}>Generate Random Array</button>
                 </div>
-                <div className="col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
-                    <input type="number" className="form-control border me-2" placeholder="Enter number to search" value={search} onChange={e => setSearch(e.target.value)} disabled={numbers.length === 0}/>
-                    <button type="button" className="btn btn-outline-primary" onClick={startSearching} disabled={numbers.length === 0}>Search</button>
+                <div className="mx-3 d-flex">
+                    <input type="number" className="form-control border mx-3" placeholder="Enter number to search" value={search} onChange={e => setSearch(e.target.value)} disabled={numbers.length === 0}/>
+                    <button type="button" className="btn btn-outline-primary text-nowrap mx-3" onClick={startSearching} disabled={numbers.length === 0}>Start Searching</button>
                 </div>
             </div>
             <div className="row">
@@ -67,6 +68,7 @@ const Sequential = () => {
                     ))}
                 </div>
             </div>
+            <Toast message="abc" type="error"/>
         </div>
     );
 }
