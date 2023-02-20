@@ -1,10 +1,14 @@
 import { useState } from "react";
-import Toast from "../../../components/Toast";
+import ToastMessage from "../../../components/ToastMessage";
 
 
 const Sequential = () => {
     const [search, setSearch] = useState('');
     const [numbers, setNumbers] = useState([]);
+    const [numberFound, setNumberFound] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('');
 
     const generateRandomArray = () => {
         const numberOfElements = 20;
@@ -30,11 +34,24 @@ const Sequential = () => {
                 await sleep(1000);
                 if(numbers[i] === parseInt(search)){
                     setSearch('');
+                    setNumberFound(true);
                     break;
                 }
                 element.classList.remove('bg-warning');
                 element.classList.add('bg-danger');
             }
+            setSearch('');
+            if(!numberFound){
+                setToast('Number you are searching is not in array!', 'error');
+                setTimeout(() => {
+                    unSetToast();
+                }, 3000);
+            }
+        }else{
+            setToast('Please enter value to search!', 'error');
+            setTimeout(() => {
+                unSetToast();
+            }, 3000);
         }
     }
 
@@ -44,6 +61,18 @@ const Sequential = () => {
 
     const sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    const setToast = (message, type) => {
+        setToastMessage(message);
+        setToastType(type);
+        setShowToast(true);
+    }
+
+    const unSetToast = () => {
+        setShowToast(false);
+        setToastMessage('');
+        setToastType('');
     }
 
     return (
@@ -68,7 +97,7 @@ const Sequential = () => {
                     ))}
                 </div>
             </div>
-            <Toast message="abc" type="error"/>
+            <ToastMessage show={showToast} message={toastMessage} type={toastType} close={() => setShowToast(false)}/> 
         </div>
     );
 }

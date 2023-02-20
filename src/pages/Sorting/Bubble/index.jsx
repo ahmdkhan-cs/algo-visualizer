@@ -31,12 +31,12 @@ const Bubble = () => {
                 element1.classList.remove('bg-warning');
                 element2.classList.remove('bg-warning');
 
-                element1.classList.add('bg-success');
-                element2.classList.add('bg-success');
+                element1.classList.add('bg-info');
+                element2.classList.add('bg-info');
 
                 const element1Height = parseInt(element1.style.height.replace('px', ''));
                 const element2Height = parseInt(element2.style.height.replace('px', ''));
-                await sleep(1000);
+                await sleep(500);
 
                 if(order === 'asc'){
                     if(element1Height > element2Height){
@@ -67,19 +67,32 @@ const Bubble = () => {
                 }
                 
 
-                element1.classList.remove('bg-success');
-                element2.classList.remove('bg-success');
+                element1.classList.remove('bg-info');
+                element2.classList.remove('bg-info');
 
                 element1.classList.add('bg-warning');
                 element2.classList.add('bg-warning');
             }
+            const sortedElement = document.getElementById(`element-id-${numbers.length - i - 1}`);
+            sortedElement.classList.remove('bg-warning');
+            sortedElement.classList.add('bg-success');
         }
         setNumbers(nums);
         setSort(false);
+        done();
     }
 
     const getRandomNumber = (number) => {
         return Math.round(Math.random() * (number - 1)) + 1;
+    }
+
+    const done = async () => {
+        for(let i = 0; i < numbers.length; i++){
+            const element = document.getElementById(`element-id-${i}`);
+            element.classList.remove('bg-success');
+            element.classList.add('bg-warning');
+            await sleep(50);
+        }
     }
 
     const sleep = (ms) => {
