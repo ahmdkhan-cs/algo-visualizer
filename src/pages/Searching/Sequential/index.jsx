@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ToastMessage from "../../../components/ToastMessage";
 
 
@@ -84,6 +84,10 @@ const Sequential = () => {
         setToastMessage('');
         setToastType('');
     }
+
+    useEffect(() => {
+        generateRandomArray();
+    }, []);
 
     return (
         <div>

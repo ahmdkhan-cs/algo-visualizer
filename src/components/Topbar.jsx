@@ -28,11 +28,25 @@ const Topbar = () => {
                                 <></>
                             )
                         }
+                        {
+                            location.pathname.includes("/sorting") ? (
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link active" to="/sorting/bubble">Bubble Sort</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link active" to="/sorting/insertion">Insertion Sort</Link>
+                                    </li>
+                                </>
+                            ) : (
+                                <></>
+                            )
+                        }
                     </ul>
-                    <div className="d-flex">
+                    {/* <div className="d-flex">
                         <button className="btn btn-outline-light me-2">Login</button>
                         <button className="btn btn-outline-light">Register</button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </nav>
