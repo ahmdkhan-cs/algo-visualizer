@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
+import ToastMessage from "../../../components/ToastMessage";
 
 const Binary = () => {
     const [search, setSearch] = useState('');
     const [numbers, setNumbers] = useState([]);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastType, setToastType] = useState('');
 
     const generateRandomArray = () => {
         const numberOfElements = 20;
@@ -14,6 +18,9 @@ const Binary = () => {
     }
 
     const startSearching = async () => {
+        let numberFound = false;
+        done();
+        console.log("here");
         if(search){
             let low = 0;
             let high = numbers.length - 1;
@@ -23,12 +30,16 @@ const Binary = () => {
                     break;
                 }
                 mid = parseInt(low + (high - low) / 2);
+                console.log(mid);
                 const element = document.querySelector(`#element-id-${mid} div`);
                 element.classList.remove('bg-danger');
                 element.classList.add('bg-warning');
                 await sleep(1000);
                 if(numbers[mid] === parseInt(search)){
                     setSearch('');
+                    numberFound = true;
+                    element.classList.remove('bg-warning');
+                    element.classList.add('bg-success');
                     break;
                 }else{
                     if(numbers[mid] < parseInt(search)){
@@ -37,15 +48,44 @@ const Binary = () => {
                         high = mid - 1;
                     }
                 }
-                
-                element.classList.remove('bg-warning');
-                element.classList.add('bg-danger');
             }
+            setSearch('');
+            if(!numberFound){
+                setToast('Number you are searching is not in array!', 'error');
+                setTimeout(() => {
+                    unSetToast();
+                }, 3000);
+            }
+        }else{
+            setToast('Please enter value to search!', 'error');
+            setTimeout(() => {
+                unSetToast();
+            }, 3000);
+        }
+    }
+
+    const done = () => {
+        for(let i = 0; i < numbers.length; i++){
+            const element = document.querySelector(`#element-id-${i} div`);
+            element.classList.remove('bg-warning');
+            element.classList.add('bg-danger');
         }
     }
 
     const sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    const setToast = (message, type) => {
+        setToastMessage(message);
+        setToastType(type);
+        setShowToast(true);
+    }
+
+    const unSetToast = () => {
+        setShowToast(false);
+        setToastMessage('');
+        setToastType('');
     }
 
     useEffect(() => {
@@ -74,6 +114,7 @@ const Binary = () => {
                     ))}
                 </div>
             </div>
+            <ToastMessage show={showToast} message={toastMessage} type={toastType} close={() => setShowToast(false)}/> 
         </div>
     );
 }

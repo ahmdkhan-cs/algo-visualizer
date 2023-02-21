@@ -5,7 +5,6 @@ import ToastMessage from "../../../components/ToastMessage";
 const Sequential = () => {
     const [search, setSearch] = useState('');
     const [numbers, setNumbers] = useState([]);
-    const [numberFound, setNumberFound] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [toastType, setToastType] = useState('');
@@ -26,6 +25,8 @@ const Sequential = () => {
     }
 
     const startSearching = async () => {
+        let numberFound = false;
+        done();
         if(search){
             for(let i = 0; i < numbers.length; i++){
                 const element = document.querySelector(`#element-id-${i} div`);
@@ -34,11 +35,11 @@ const Sequential = () => {
                 await sleep(1000);
                 if(numbers[i] === parseInt(search)){
                     setSearch('');
-                    setNumberFound(true);
+                    numberFound = true;
+                    element.classList.remove('bg-warning');
+                    element.classList.add('bg-success');
                     break;
                 }
-                element.classList.remove('bg-warning');
-                element.classList.add('bg-danger');
             }
             setSearch('');
             if(!numberFound){
@@ -57,6 +58,15 @@ const Sequential = () => {
 
     const getRandomNumber = (number) => {
         return Math.round(Math.random() * (number - 1)) + 1;
+    }
+
+    const done = () => {
+        for(let i = 0; i < numbers.length; i++){
+            const element = document.querySelector(`#element-id-${i} div`);
+            element.classList.remove('bg-warning');
+            element.classList.add('bg-danger');
+            sleep(50);
+        }
     }
 
     const sleep = (ms) => {
